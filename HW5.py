@@ -10,6 +10,8 @@ and print result
 indexes 6, 10, 13 have age >=30 and print result.
 """
 
+AGE = 30
+
 people_records = [
     ('John', 'Doe', 28, 'Engineer', 'New York'),
     ('Alice', 'Smith', 35, 'Teacher', 'Los Angeles'),
@@ -25,19 +27,25 @@ people_records = [
     ('Emma', 'Hall', 31, 'Chef', 'Dallas'),
     ('William', 'Clark', 29, 'Financial Analyst', 'Houston'),
     ('Ava', 'White', 42, 'Journalist', 'San Diego'),
-    ('Ethan', 'Anderson', 36, 'Product Manager', 'Phoenix')
+    ('Ethan', 'Anderson', 36, 'Product Manager', 'Phoenix'),
 ]
 
-people_records.insert(0, ('Antony', 'Poveck', 25, 'QA', 'Taxes'))
-people_records[1], people_records[5] = people_records[5], people_records[1]
-print(people_records)
+p_rec = people_records.copy()
+p_rec.insert(0, ('Antony', 'Poveck', 25, 'QA', 'Taxes'))
+p_rec[1], p_rec[5] = p_rec[5], p_rec[1]
+print(p_rec)
 
 """Print check for every case."""
 
-print(people_records[6][2] >= 30)
-print(people_records[10][2] >= 30)
-print(people_records[13][2] >= 30)
+print(p_rec[6][2] >= AGE)
+print(p_rec[10][2] >= AGE)
+print(p_rec[13][2] >= AGE)
 
 """Print check for logical AND."""
 
-print(people_records[6][2] >= 30 and people_records[10][2] >= 30 and people_records[13][2] >= 30)
+print(p_rec[6][2] >= AGE and p_rec[10][2] >= AGE and p_rec[13][2] >= AGE)
+
+"""Print check for logical ALL."""
+
+log_all = all((p_rec[6][2] >= AGE, p_rec[10][2] >= AGE, p_rec[13][2] >= AGE))
+print(log_all)
