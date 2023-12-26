@@ -7,7 +7,8 @@ capital cases) and write output as table smth
 
 then modify text where each vowel replaced with
 A->À;  a->à ; E-> É ; e->é; I->Í , i->í ; O->Ó ; o->ó; U->Ú; u->ú
-ex. "Í wàndéréd lónély...."   and print it."""
+ex. "Í wàndéréd lónély...."   and print it.
+"""
 
 poem_text = """I wandered lonely as a cloud
 That floats on high o'er vales and hills,
@@ -29,18 +30,14 @@ dict_poem = {'a': poem_low.count('a'), 'e': poem_low.count('e'),
              'u': poem_low.count('u')}
 
 sep_num = 25
-print("-" * sep_num)
+print('-' * sep_num)
 print(f"| {'vowel':^10} | {'count': ^8} |")
-print("-" * sep_num)
+print('-' * sep_num)
 
 for vowel, count in dict_poem.items():
     print(f'| {vowel:^10} | {count:^8} |')
-print("-" * sep_num)
+print('-' * sep_num)
 
-poem_text = poem_text.replace('A', 'À').replace('a', 'à')
-poem_text = poem_text.replace('E', 'É').replace('e', 'é')
-poem_text = poem_text.replace('I', 'Í').replace('i', 'í')
-poem_text = poem_text.replace('O', 'Ó').replace('o', 'ó')
-poem_text = poem_text.replace('U', 'Ú').replace('u', 'ú')
-
-print(poem_text)
+translation_table = str.maketrans('AaEeIiOoUu', 'ÀàÉéÍíÓóÚú')
+modified_text = poem_text.translate(translation_table)
+print(modified_text)
