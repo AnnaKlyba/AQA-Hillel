@@ -55,24 +55,22 @@ people = [
     ('Julie', 55, 90, 'Clark', 'female'),
     ('Kenny', 38, 140, 'Harris', 'male'),
     ('Luna', 55, 170, 'Smith', 'female'),
-    ('Mike', 55, 55, 'Johnson', 'male')
+    ('Mike', 55, 55, 'Johnson', 'male'),
 ]
 
 people2 = people.copy()
 
-people2.sort(key=itemgetter(4, 1))
-
-p1, p2, *people3, p4, p5 = people2
-print(people3)
+people2.sort(key=itemgetter(1, 4))
+print(people2[2:-2])
 
 sep_num = 25
-print("-" * sep_num)
+print('-' * sep_num)
 print(f"| {'sex':^10} | {'count': ^8} |")
-print("-" * sep_num)
+print('-' * sep_num)
 
-new_p = list(itertools.chain.from_iterable(people3))
-cou = Counter(new_p)
+new_p = list(itertools.chain.from_iterable(people2))
+counter_obj = Counter(new_p)
 
-print(f'| {"male":^10} | {cou["male"]:^8} |')
-print(f'| {"female":^10} | {cou["female"]:^8} |')
-print("-" * sep_num)
+print(f'| {"male":^10} | {counter_obj["male"]:^8} |')
+print(f'| {"female":^10} | {counter_obj["female"]:^8} |')
+print('-' * sep_num)
