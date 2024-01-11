@@ -1,5 +1,6 @@
 """
-Homework 6.
+Homework 6. List sorting.
+
 You have list of tuples. Each tuple represents:
 name, age, some sum, last name, sex
 Please do such things:
@@ -12,9 +13,9 @@ advice: female and male calculation can be done vs flat list,
 or you can find your own approach.
 """
 
-from operator import itemgetter
 import itertools
 from collections import Counter
+from operator import itemgetter
 
 people = [
     ('Alice', 32, 100, 'Johnson', 'female'),
