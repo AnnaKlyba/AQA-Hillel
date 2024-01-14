@@ -62,14 +62,16 @@ people = [
 people2 = people.copy()
 
 people2.sort(key=itemgetter(1, 4))
-print(people2[2:-2])
+
+people3 = people2[2:-2]
+print(people3)
 
 sep_num = 25
 print('-' * sep_num)
 print(f"| {'sex':^10} | {'count': ^8} |")
 print('-' * sep_num)
 
-new_p = list(itertools.chain.from_iterable(people2))
+new_p = list(itertools.chain.from_iterable(people3))
 counter_obj = Counter(new_p)
 
 print(f'| {"male":^10} | {counter_obj["male"]:^8} |')
