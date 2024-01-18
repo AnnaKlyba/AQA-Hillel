@@ -11,11 +11,13 @@ optionally you can check your algorithm somehow with assert statements
 
 w, x, y, z = -1, -1, -1, 0
 
+template = "'{}' is minimum value"
+
 if (w <= x) and (w <= y) and (w <= z):
-    print("'w' is minimum value")
+    print(template.format('w'))
 elif (x <= w) and (x <= y) and (x <= z):
-    print("'х' is minimum value")
+    print(template.format('x'))
 elif (y <= w) and (y <= x) and (y <= z):
-    print("'y' is minimum value")
+    print(template.format('y'))
 else:
-    print("'z' is minimum value")
+    print(template.format('z'))
