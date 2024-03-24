@@ -11,92 +11,119 @@ Homework 11. Bank Card operations.
 # and code there to check your class written logic.
 """
 
-from datetime import datetime as dt
 import re
+from datetime import datetime as dt
+from random import SystemRandom as Sr
+
+rand = Sr()
 
 
 class CardOperations:
+    """Card operations."""
+
     CVV_DIGITS = 3
-    card_type = "Standard"
+    card_type = 'Standard'
 
-
-    def __init__(self, CVV, Card_num, EndDate, Surname, Name, PIN, Money):
-        self.CVV = CVV if self.check_CVV(CVV) else "000"
-        self.PIN = PIN
-        self.Name = Name
-        self.Surname = Surname
-        self.EndDate = EndDate
-        self.Card_num = Card_num
-        self.Money = Money
+    def __init__(self, cvv, card_num, end_date, surname, name, pin, money=0):
+        """Has params."""
+        self.__CVV = cvv if self.check_cvv(cvv) else str(rand.randint(1, 999)).zfill(3)
+        self.__PIN = pin
+        self.Name = name
+        self.Surname = surname
+        self.EndDate = end_date
+        self.__Card_num = card_num if card_num else str(rand.randint(1, 9999999999999999)).zfill(12)
+        self.Money = float(money)
 
     def check_pin(self):
-        for att in (2,1,0):
-            your_PIN = input('Enter PIN:')
-            if int(your_PIN) == self.PIN:
+        """Check pin code with 3 attempts."""
+        att = 2
+        while att >= 0:
+            your_pin = input('Enter PIN:')
+            if int(your_pin) == self.pin:
                 return True
             else:
-                print(f"Error, {att} attempts left")
+                print(f'Error, {att} attempts left')
+                att -= 1
         return False
 
-    def adding(self, Money):
-        if Money > 0:
-            self.Money += Money
-            return True
-        else:
-            return 'Error'
+    def adding(self, money):
+        """Refill."""
+        self.Money += float(money)
+        return float(self.Money)
 
-    def print_balance(self):
-        return self.Money
+    def withdraw(self, money):
+        """Withdrawal from account."""
+        if float(money) <= self.Money:
+            self.Money -= float(money)
+            return float(self.Money)
+        else:
+            raise ValueError('Not enough money')
 
     @classmethod
-    def check_CVV(cls, CVV):
-        cvv_pattern = "^/d{" + str(cls.CVV_DIGITS) + "}$"
-        return True if re.match(pattern=cvv_pattern, string=str(CVV)) else False
+    def check_cvv(cls, cvv):
+        cvv_pat = '^/d{' + str(cls.CVV_DIGITS) + '}$'
+        return True if re.match(pattern=cvv_pat, string=str(cvv)) else False
 
-    def get_cvv(self):
-        return self.CVV
+    @property
+    def cvv(self):
+        return self.__CVV
+
+    @property
+    def pin(self):
+        return self.__PIN
 
     def set_card_type(self, value):
         self.card_type = value
 
     @staticmethod
-    def check_EndDate(EndDate):
+    def check_enddate(end_date):
         datetime = dt.now()
-        return datetime < EndDate
+        return datetime < end_date
 
-    def get_card_number(self):
+    @property
+    def card_number(self):
+        return str(self.__Card_num)[-4:]
+
+    def get_data(self):
+        """Checking data to obtain a card number."""
         entered_surname = input('Enter Surname: ')
         entered_name = input('Enter Name: ')
 
         if entered_name == self.Name and entered_surname == self.Surname:
-            return self.Card_num
+            return self.card_number
         else:
-            return None
+            raise ValueError('Wrong Surname or name were defined')
 
     def __str__(self):
-        """Returns a string representation of the CardOperations object."""
-        return f"{self.Name} {self.Surname} {self.Card_num} {self.CVV} {self.EndDate}"
+        """Return a string representation of the CardOperations object."""
+        return f'{self.Name} {self.Surname} {self.card_number} {self.EndDate}'
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     try:
-        card = CardOperations(777,1234123412341234,'2025-02-02',
-                                 'Shvets', 'Anna', 987, 100)
+        card = CardOperations(777, 1234123412341234, '2025-02-02',
+                              'Shvets', 'Anna', 987, 100)
 
         if card.check_pin():
+            card.set_card_type('Gold')
+            print('Card type after change:', card.card_type)
 
-            card.set_card_type("Gold")
-            print("Card type after change:", card.card_type)
-
-            if card.check_EndDate(dt(2026, 2, 2)):
-                print("The card date is valid.")
+            if card.check_enddate(dt(2026, 2, 2)):
+                print('The card date is valid.')
             else:
-                print("Card has expired.")
+                print('Card has expired.')
 
-            card_number = card.get_card_number()
+            refill_amount = input("Enter refill amount: ")
+            card.adding(refill_amount)
+            print("Refill successful. New balance:", card.Money)
+
+            withdraw_amount = input("Enter withdrawal amount: ")
+            card.withdraw(withdraw_amount)
+
+            card_number = card.card_number
             if card_number:
-                print("Card number:", card_number)
+                print('Card number:', card_number)
             else:
                 print("The entered data doesn't match the data in the system.")
     except Exception as ex_h:
-        print("An error occurred:", ex_h)
+        print('An error occurred:', ex_h)
